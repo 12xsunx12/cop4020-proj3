@@ -1,0 +1,74 @@
+Class evalu8:
+
+    Method evaluate(expression, environment):
+        // Main method to evaluate expressions
+        if expression is a list:
+            // Check for special forms
+            if first element of expression is a lambda:
+                // Handle lambda expression
+                return handle_lambda(expression, environment)
+            else:
+                // Handle built-in operations
+                operation = get_operation(expression)
+                arguments = evaluate_arguments(expression, environment)
+                return apply_operation(operation, arguments)
+        else if expression is a numerical literal:
+            // Return numerical literal
+            return expression
+        else if expression is an identifier:
+            // Look up identifier in the environment
+            value = lookup_identifier(expression, environment)
+            if value is not found:
+                // Report error if identifier is not bound
+                raise_error("Error: Identifier is not bound")
+            else:
+                return value
+
+    Method get_operation(expression):
+        // Extract operation from expression
+        return first element of expression
+
+    Method evaluate_arguments(expression, environment):
+        // Recursively evaluate arguments of the expression
+        if length of expression is 1:
+            return []
+        else:
+            first_argument = evaluate(first element of expression, environment)
+            rest_of_arguments = evaluate_arguments(rest of expression, environment)
+            return [first_argument] + rest_of_arguments
+
+    Method apply_operation(operation, arguments):
+        // Apply operation to evaluated arguments
+        if operation is addition:
+            return sum of arguments
+        else if operation is multiplication:
+            return product of arguments
+        else if operation is equal?:
+            return true if all arguments are equal, false otherwise
+        else if operation is less?:
+            return true if first argument is less than second argument, false otherwise
+
+    Method handle_lambda(expression, environment):
+        // Handle lambda expression
+        parameters = get_parameters(expression)
+        body = get_body(expression)
+        return lambda function(parameters, body)
+
+    Method get_parameters(expression):
+        // Extract parameters from lambda expression
+        return second element of expression
+
+    Method get_body(expression):
+        // Extract body from lambda expression
+        return third element of expression
+
+    Method lookup_identifier(identifier, environment):
+        // Look up identifier in the environment
+        for each pair in environment:
+            if first element of pair is equal to identifier:
+                return second element of pair
+        return None
+
+    Method raise_error(message):
+        // Raise an error message
+        print message
